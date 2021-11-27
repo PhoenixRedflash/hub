@@ -1,5 +1,5 @@
 import { isUndefined } from 'lodash';
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import root from 'react-shadow/styled-components';
 
@@ -9,7 +9,7 @@ import Widget from './layout/Widget';
 const renderWidget = (element: HTMLElement) => {
   const { url, theme, responsive, header, stars } = element.dataset;
   ReactDOM.render(
-    <React.StrictMode>
+    <StrictMode>
       <root.section>
         <div style={{ all: 'initial' }}>
           <Widget
@@ -22,7 +22,7 @@ const renderWidget = (element: HTMLElement) => {
           />
         </div>
       </root.section>
-    </React.StrictMode>,
+    </StrictMode>,
     element
   );
 };
@@ -45,7 +45,7 @@ Widgets.forEach((div: Element) => {
 const renderGroup = (element: HTMLElement) => {
   const { url, loading, theme, color, responsive, width, header, stars } = element.dataset;
   ReactDOM.render(
-    <React.StrictMode>
+    <StrictMode>
       <root.section>
         <div style={{ all: 'initial' }}>
           <Group
@@ -60,7 +60,7 @@ const renderGroup = (element: HTMLElement) => {
           />
         </div>
       </root.section>
-    </React.StrictMode>,
+    </StrictMode>,
     element
   );
 };
