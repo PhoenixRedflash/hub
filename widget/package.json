@@ -34,7 +34,12 @@
     "webpack-cli": "^4.9.1"
   },
   "resolutions": {
-    "react-scripts/**/nth-check": "^2.0.1"
+    "react-scripts/**/@pmmmwh/react-refresh-webpack-plugin": "^0.5.2",
+    "react-scripts/**/immer": "^9.0.7",
+    "react-scripts/**/browserslist": "^4.16.5",
+    "react-scripts/**/glob-parent": "^5.1.2",
+    "react-scripts/**/nth-check": "^2.0.1",
+    "react-scripts/**/webpack-dev-server": "^4.6.0"
   },
   "scripts": {
     "start": "REACT_APP_HUB_BASE_URL=http://localhost:8000 react-scripts start",
