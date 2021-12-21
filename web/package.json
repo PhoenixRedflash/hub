@@ -6,7 +6,7 @@
     "@analytics/google-analytics": "^0.5.3",
     "@apidevtools/json-schema-ref-parser": "^9.0.6",
     "analytics": "^0.7.18",
-    "apexcharts": "^3.27.3",
+    "apexcharts": "^3.31.0",
     "bootstrap": "^4.5.2",
     "classnames": "^2.3.1",
     "codemirror": "^5.57.0",
