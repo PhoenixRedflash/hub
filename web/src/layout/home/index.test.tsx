@@ -13,6 +13,7 @@ jest.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mockOutletContextData: any = {
   isSearching: false,
 };
@@ -23,6 +24,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const getMockStats = (fixtureId: string): Stats => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/index/${fixtureId}.json`) as Stats;
 };
 
@@ -45,7 +47,7 @@ describe('Home index', () => {
       expect(API.getStats).toHaveBeenCalledTimes(1);
     });
 
-    expect(await screen.findByText('Kubernetes packages')).toBeInTheDocument();
+    expect(await screen.findByText('Cloud Native packages')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -64,7 +66,7 @@ describe('Home index', () => {
         expect(API.getStats).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findByText('Kubernetes packages')).toBeInTheDocument();
+      expect(await screen.findByText('Cloud Native packages')).toBeInTheDocument();
     });
 
     it('renders dash symbol when results are 0', async () => {
@@ -107,7 +109,7 @@ describe('Home index', () => {
       const heading = await screen.findByRole('banner');
       expect(heading).toBeInTheDocument();
       expect(await screen.findByText(/Find, install and publish/)).toBeInTheDocument();
-      expect(await screen.findByText('Kubernetes packages')).toBeInTheDocument();
+      expect(await screen.findByText('Cloud Native packages')).toBeInTheDocument();
     });
   });
 
@@ -125,7 +127,7 @@ describe('Home index', () => {
       await waitFor(() => expect(API.getStats).toHaveBeenCalledTimes(1));
 
       const links = await screen.findAllByRole('button');
-      expect(links).toHaveLength(27);
+      expect(links).toHaveLength(29);
 
       expect(links[2]).toHaveProperty('href', 'https://github.com/artifacthub/hub');
       expect(links[3]).toHaveProperty('href', 'https://cloud-native.slack.com/channels/artifact-hub');
@@ -151,12 +153,14 @@ describe('Home index', () => {
       expect(links[19]).toHaveProperty('href', 'https://kubearmor.io/');
       expect(links[20]).toHaveProperty('href', 'https://www.kubewarden.io/');
       expect(links[21]).toHaveProperty('href', 'https://www.kyverno.io/');
-      expect(links[22]).toHaveProperty('href', 'https://github.com/operator-framework');
-      expect(links[23]).toHaveProperty('href', 'https://www.openpolicyagent.org/');
-      expect(links[24]).toHaveProperty('href', 'https://tekton.dev/');
-      expect(links[25]).toHaveProperty('href', 'https://tinkerbell.org/');
+      expect(links[22]).toHaveProperty('href', 'https://meshery.io/');
+      expect(links[23]).toHaveProperty('href', 'https://github.com/operator-framework');
+      expect(links[24]).toHaveProperty('href', 'https://www.openpolicyagent.org/');
+      expect(links[25]).toHaveProperty('href', 'https://www.opencost.io/');
+      expect(links[26]).toHaveProperty('href', 'https://tekton.dev/');
+      expect(links[27]).toHaveProperty('href', 'https://tinkerbell.org/');
 
-      expect(links[26]).toHaveProperty('href', 'https://www.cncf.io/sandbox-projects/');
+      expect(links[28]).toHaveProperty('href', 'https://www.cncf.io/projects/');
     });
   });
 });

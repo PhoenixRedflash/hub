@@ -1,4 +1,5 @@
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 import {
   Channel,
@@ -113,6 +114,8 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
         case RepositoryKind.KCL:
         case RepositoryKind.Headlamp:
         case RepositoryKind.InspektorGadget:
+        case RepositoryKind.MesheryDesign:
+        case RepositoryKind.OpenCost:
           if (isUndefined(pkg.install)) {
             output.errorMessage = 'This package does not include installation instructions yet.';
             hasError = true;
@@ -260,6 +263,7 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
         break;
       case RepositoryKind.TektonTask:
       case RepositoryKind.TektonPipeline:
+      case RepositoryKind.TektonStepAction:
         if (isUndefined(pkg.install)) {
           output.methods.push({
             label: 'kubectl',

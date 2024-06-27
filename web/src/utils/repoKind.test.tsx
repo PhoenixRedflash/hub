@@ -79,6 +79,18 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('inspektor-gadget')).toBe(RepositoryKind.InspektorGadget);
     });
 
+    it('tekton-stepaction', () => {
+      expect(methods.getRepoKind('tekton-stepaction')).toBe(RepositoryKind.TektonStepAction);
+    });
+
+    it('meshery', () => {
+      expect(methods.getRepoKind('meshery')).toBe(RepositoryKind.MesheryDesign);
+    });
+
+    it('opencost', () => {
+      expect(methods.getRepoKind('opencost')).toBe(RepositoryKind.OpenCost);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -159,6 +171,18 @@ describe('repoKind', () => {
 
     it('inspektor gadget kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.InspektorGadget)).toBe('inspektor-gadget');
+    });
+
+    it('tekton-stepaction kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.TektonStepAction)).toBe('tekton-stepaction');
+    });
+
+    it('meshery design kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.MesheryDesign)).toBe('meshery');
+    });
+
+    it('opencost plugin kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.OpenCost)).toBe('opencost');
     });
 
     it('unknown kind', () => {

@@ -95,6 +95,12 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'headlamp';
     case RepositoryKind.InspektorGadget:
       return 'inspektor-gadget';
+    case RepositoryKind.TektonStepAction:
+      return 'tekton-stepaction';
+    case RepositoryKind.MesheryDesign:
+      return 'meshery';
+    case RepositoryKind.OpenCost:
+      return 'opencost';
     default:
       return null;
   }
@@ -220,7 +226,11 @@ const CardBody = styled.div<CardBodyProps>`
   }
 `;
 
-const Brand = styled(SVGIcons)`
+interface BrandProps {
+  theme: string;
+}
+
+const Brand = styled(SVGIcons)<BrandProps>`
   ${(props) =>
     props.theme === 'dark' &&
     css`
@@ -382,14 +392,14 @@ export default function Widget(props: Props) {
         setPackageSummary(null);
       }
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if (props.url !== currentUrl && !props.inGroup) {
       setCurrentUrl(props.url);
       fetchPackage();
     }
-  }, [props.url]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.url]);
 
   if (isNull(packageSummary) || isUndefined(props.url)) return null;
 
@@ -417,7 +427,7 @@ export default function Widget(props: Props) {
             ) : (
               <>
                 <HeaderWrapper>
-                  <ImageWrapper theme={currentTheme}>
+                  <ImageWrapper>
                     <Image
                       baseUrl={urlParams!.origin}
                       imageId={packageSummary.logoImageId}
@@ -462,11 +472,16 @@ export default function Widget(props: Props) {
 
                 {(packageSummary.official ||
                   packageSummary.repository.official ||
-                  packageSummary.repository.verifiedPublisher) && (
+                  packageSummary.repository.verifiedPublisher ||
+                  (packageSummary.repository.kind === RepositoryKind.Helm && packageSummary.hasValuesSchema)) && (
                   <BadgesWrapper>
                     {packageSummary.deprecated && <Label type="deprecated" />}
 
                     {(packageSummary.cncf || packageSummary.repository.cncf) && <Label type="cncf" />}
+
+                    {packageSummary.repository.kind === RepositoryKind.Helm && packageSummary.hasValuesSchema && (
+                      <Label type="valuesSchema" />
+                    )}
 
                     {packageSummary.signed && <Label type="signed" />}
 

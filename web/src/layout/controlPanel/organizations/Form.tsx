@@ -60,6 +60,7 @@ const OrganizationForm = forwardRef<HTMLFormElement, Props>((props, ref) => {
         }
       }
       props.setIsSending(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       props.setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -166,7 +167,7 @@ const OrganizationForm = forwardRef<HTMLFormElement, Props>((props, ref) => {
           resourceKind: ResourceKind.organizationName,
           excluded: props.organization ? [props.organization.name] : [],
         }}
-        pattern="[a-z0-9-]+"
+        pattern="[a-z0-9\-]+"
         autoComplete="off"
         required
       />

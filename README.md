@@ -8,7 +8,7 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/artifacthub/hub)
 [![Licenses](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fartifacthub%2Fhub.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fartifacthub%2Fhub?ref=badge_shield)
 
-[Artifact Hub](https://artifacthub.io) is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects.
+[Artifact Hub](https://artifacthub.io) is a web-based application that enables finding, installing, and publishing packages and configurations for Cloud Native packages.
 
 Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
 
@@ -32,9 +32,11 @@ At the moment, the following artifacts kinds are supported *(with plans to suppo
 - [Kubectl plugins (Krew)](https://krew.sigs.k8s.io/)
 - [Kubewarden policies](https://www.kubewarden.io)
 - [Kyverno policies](https://kyverno.io)
+- [Meshery designs](https://meshery.io)
 - [OLM operators](https://github.com/operator-framework)
+- [OpenCost plugins](https://www.opencost.io)
 - [Open Policy Agent (OPA) policies](https://www.openpolicyagent.org/)
-- [Tekton tasks and pipelines](https://tekton.dev/)
+- [Tekton tasks, pipelines and stepactions](https://tekton.dev/)
 - [Tinkerbell actions](https://tinkerbell.org/)
 
 You can use Artifact Hub to:
@@ -47,7 +49,7 @@ You can use Artifact Hub to:
 
 Feel free to ask any questions on the #artifact-hub channel in the CNCF Slack. To get an invite please visit [http://slack.cncf.io/](http://slack.cncf.io/).
 
-Artifact Hub is a [CNCF Sandbox Project](https://www.cncf.io/sandbox-projects/).
+Artifact Hub is a [CNCF Incubating Project](https://www.cncf.io/projects/).
 
 <br/>
 <table>

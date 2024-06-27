@@ -20,8 +20,10 @@ import (
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/go-git/go-git/v5/plumbing/storer"
 	"github.com/hashicorp/go-multierror"
 	v1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
+	v1alpha "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1alpha1"
 	pipelinerun "github.com/tektoncd/pipeline/pkg/reconciler/pipelinerun/resources"
 	taskrun "github.com/tektoncd/pipeline/pkg/reconciler/taskrun/resources"
 	"sigs.k8s.io/yaml"
@@ -192,20 +194,10 @@ func (s *TrackerSource) processDirBasedCatalog() (map[string]*hub.Package, error
 // processGitBasedCatalog returns the packages available in the catalog using
 // the git based versioning.
 func (s *TrackerSource) processGitBasedCatalog() (map[string]*hub.Package, error) {
-	// Open git repository and get all tags
-	gr, err := git.PlainOpenWithOptions(s.i.BasePath, &git.PlainOpenOptions{
-		DetectDotGit: true,
-	})
+	// Open git repository and fetch all tags available
+	wt, tags, err := OpenGitRepository(s.i.BasePath)
 	if err != nil {
-		return nil, fmt.Errorf("error opening git repository: %w", err)
-	}
-	wt, err := gr.Worktree()
-	if err != nil {
-		return nil, fmt.Errorf("error getting worktree: %w", err)
-	}
-	tags, err := gr.Tags()
-	if err != nil {
-		return nil, fmt.Errorf("error reading tags references: %w", err)
+		return nil, err
 	}
 
 	// Read packages available in the catalog for each tag/version
@@ -277,8 +269,28 @@ func (s *TrackerSource) warn(err error) {
 	s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
 }
 
+// OpenGitRepository opens the git repository at the provided base path and
+// returns the worktree and tags references.
+func OpenGitRepository(basePath string) (*git.Worktree, storer.ReferenceIter, error) {
+	gr, err := git.PlainOpenWithOptions(basePath, &git.PlainOpenOptions{
+		DetectDotGit: true,
+	})
+	if err != nil {
+		return nil, nil, fmt.Errorf("error opening git repository: %w", err)
+	}
+	wt, err := gr.Worktree()
+	if err != nil {
+		return nil, nil, fmt.Errorf("error getting worktree: %w", err)
+	}
+	tags, err := gr.Tags()
+	if err != nil {
+		return nil, nil, fmt.Errorf("error reading tags references: %w", err)
+	}
+	return wt, tags, nil
+}
+
 // GetManifest reads, parses and validates the package manifest, which can be a
-// Tekton task or a pipeline manifest.
+// Tekton task, pipeline or stepaction manifest.
 func GetManifest(kind hub.RepositoryKind, pkgName, pkgPath string) (interface{}, []byte, error) {
 	manifestPath := path.Join(pkgPath, pkgName+".yaml")
 	manifestData, err := os.ReadFile(manifestPath)
@@ -291,6 +303,8 @@ func GetManifest(kind hub.RepositoryKind, pkgName, pkgPath string) (interface{},
 		manifest = &v1.Task{}
 	case hub.TektonPipeline:
 		manifest = &v1.Pipeline{}
+	case hub.TektonStepAction:
+		manifest = &v1alpha.StepAction{}
 	}
 	if err := yaml.Unmarshal(manifestData, &manifest); err != nil {
 		return nil, nil, err
@@ -316,6 +330,10 @@ func validateManifest(manifest interface{}) error {
 		name = m.Name
 		version = m.Labels[versionLabelTKey]
 		description = m.Spec.Description
+	case *v1alpha.StepAction:
+		name = m.Name
+		version = m.Labels[versionLabelTKey]
+		description = "Tekton StepAction" // TODO: description missing in v1alpha.StepAction
 	}
 
 	// Validate manifest data
@@ -335,7 +353,7 @@ func validateManifest(manifest interface{}) error {
 }
 
 // PreparePackageInput represents the information required to prepare a package
-// of Tekton task and pipelines kinds.
+// of Tekton task, pipeline and stepaction kinds.
 type PreparePackageInput struct {
 	R           *hub.Repository
 	Tag         string
@@ -388,6 +406,16 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 				"run_after": mts.RunAfter,
 			})
 		}
+	case *v1alpha.StepAction:
+		tektonKind = "stepaction"
+		name = m.Name
+		version = m.Labels[versionLabelTKey]
+		descriptionPrefix := m.Annotations[displayNameTKey]
+		if descriptionPrefix == "" {
+			descriptionPrefix = name
+		}
+		description = fmt.Sprintf("%s StepAction", descriptionPrefix)
+		annotations = m.Annotations
 	}
 
 	// Prepare version

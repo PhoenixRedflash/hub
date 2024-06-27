@@ -81,21 +81,21 @@ const HomeView = () => {
         autoClose: false,
       });
     }
-  }, [location]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [location]);
 
   return (
     <div className="d-flex flex-column flex-grow-1 bg-white home">
       <div className={`jumbotron mb-0 text-center border-0 ${styles.jumbotron}`}>
         <div
           role="banner"
-          aria-label="Find, install and publisher Kubernetes packages"
+          aria-label="Find, install and publisher Cloud Native packages"
           className={`display-4 text-center d-block d-xxl-flex justify-content-center noFocus ${styles.mainTitle}`}
           id="content"
           tabIndex={-1}
         >
           Find, install and publish
           <br />
-          <span className={styles.secondLine}>Kubernetes packages</span>
+          <span className={styles.secondLine}>Cloud Native packages</span>
         </div>
 
         <div className="mt-4 mt-sm-5 text-center">
@@ -227,12 +227,13 @@ const HomeView = () => {
           <div className={`py-5 textLight fs-4 fw-light ${styles.about}`}>
             <div className="container-lg px-4 px-sm-0 py-0 py-md-5">
               <div className="text-center px-3 px-xs-0">
-                Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
-                configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco
+                Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native
+                packages and configurations. For example, this could include Helm charts and plugins, Falco
                 configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions,
-                kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations,
-                container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo
-                templates, KubeArmor policies, KCL modules, Headlamp plugins and Inspektor gadgets.
+                kubectl plugins, Tekton tasks, pipelines and stepactions, KEDA scalers, CoreDNS plugins, Keptn
+                integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage
+                plugins, Argo templates, KubeArmor policies, KCL modules, Headlamp plugins, Inspektor gadgets, Meshery
+                designs and OpenCost plugins.
                 <div className="py-0 py-lg-5">
                   <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
@@ -422,6 +423,18 @@ const HomeView = () => {
                       </div>
                     </ExternalLink>
                     <ExternalLink
+                      href="https://meshery.io"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Meshery site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.MesheryDesign} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Meshery designs</small>
+                        </div>
+                      </div>
+                    </ExternalLink>
+                    <ExternalLink
                       href="https://github.com/operator-framework"
                       className={`col ${styles.iconLink}`}
                       label="Open Operator framework site"
@@ -445,6 +458,20 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
+                  </div>
+                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
+                    <ExternalLink
+                      href="https://www.opencost.io"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Policy Agent site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.OpenCost} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>OpenCost plugins</small>
+                        </div>
+                      </div>
+                    </ExternalLink>
                     <ExternalLink
                       href="https://tekton.dev"
                       className={`col ${styles.iconLink}`}
@@ -453,7 +480,7 @@ const HomeView = () => {
                       <div className="d-flex flex-column justify-content-between align-items-center h-100">
                         <RepositoryIcon kind={RepositoryKind.TektonTask} type="white" className={styles.aboutIcon} />
                         <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                          <small>Tekton tasks and pipelines</small>
+                          <small>Tekton packages</small>
                         </div>
                       </div>
                     </ExternalLink>
@@ -480,22 +507,27 @@ const HomeView = () => {
           </div>
           <div className="py-5 text-dark fs-4 fw-light">
             <div className="container-lg px-sm-4 px-lg-0 py-0 py-md-5">
-              <div className="text-center px-4 px-xs-0">
+              <div className="d-flex flex-column justify-content-center px-4 px-xs-0">
                 <img
-                  className={`${styles.logo} homeLogo`}
-                  src="/static/media/cncf-sandbox-horizontal-color.png"
-                  alt="Logo CNCF sandbox project"
+                  className={`${styles.logo} ${styles.colorLogo} homeLogo`}
+                  src="/static/media/cncf-incubating-color.svg"
+                  alt="Logo CNCF incubating project"
                 />
-                <div className="px-3 pt-4">
+                <img
+                  className={`${styles.logo} ${styles.whiteLogo} homeLogo`}
+                  src="/static/media/cncf-incubating-white.svg"
+                  alt="Logo CNCF incubating project"
+                />
+                <div className="px-3 pt-4 text-center w-100">
                   Artifact Hub is a{' '}
                   <ExternalLink
-                    href="https://www.cncf.io/sandbox-projects/"
+                    href="https://www.cncf.io/projects/"
                     className="fw-semibold text-dark"
-                    label="Open CNCF sandbox projects site"
+                    label="Open CNCF projects site"
                   >
                     Cloud Native Computing Foundation
                   </ExternalLink>{' '}
-                  sandbox project.
+                  incubating project.
                 </div>
               </div>
             </div>

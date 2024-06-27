@@ -150,6 +150,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Kyverno policies
                     </option>
                     <option
+                      value="24"
+                    >
+                      Meshery designs
+                    </option>
+                    <option
                       value="3"
                     >
                       OLM operators
@@ -160,9 +165,19 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       OPA policies
                     </option>
                     <option
+                      value="25"
+                    >
+                      OpenCost plugins
+                    </option>
+                    <option
                       value="11"
                     >
                       Tekton pipelines
+                    </option>
+                    <option
+                      value="23"
+                    >
+                      Tekton stepactions
                     </option>
                     <option
                       value="7"
@@ -200,7 +215,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     data-testid="nameInput"
                     id="name"
                     name="name"
-                    pattern="[a-z][a-z0-9-]*"
+                    pattern="[a-z][a-z0-9\\\\-]*"
                     required=""
                     spellcheck="false"
                     type="text"

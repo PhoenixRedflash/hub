@@ -13,6 +13,7 @@ export interface PackageSummary {
   cncf?: boolean;
   signed?: boolean;
   deprecated?: boolean;
+  hasValuesSchema?: boolean;
 }
 
 export interface Repository {
@@ -50,6 +51,9 @@ export enum RepositoryKind {
   KCL,
   Headlamp,
   InspektorGadget,
+  TektonStepAction,
+  MesheryDesign,
+  OpenCost,
 }
 
 export interface SearchResults {

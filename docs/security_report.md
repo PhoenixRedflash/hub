@@ -18,9 +18,9 @@ Artifact Hub will try to extract the containers images used by Helm charts from 
 
 The images used by an OLM operator are extracted from the `containerImage` annotation in the [CSV file metadata section](https://github.com/operator-framework/community-operators/blob/master/docs/packaging-required-fields.md), as well as from the `related images` section in the CSV spec. Most of the OLM operators currently listed in Artifact Hub provide that information already, so security reports for them are already available in Artifact Hub with no extra effort required.
 
-### Tekton tasks and pipelines
+### Tekton tasks, pipelines and stepactions
 
-The images used by Tekton tasks and pipelines are extracted from the [`task.step.image`](https://github.com/tektoncd/pipeline/blob/main/docs/tasks.md#running-scripts-within-steps) fields of the resource yaml file. If the `image` value is specified by [`params`](https://github.com/tektoncd/pipeline/blob/main/docs/tasks.md#specifying-parameters), the default value of the params (if provided) is used to run the security report. You can find examples with explanations [here](https://github.com/tektoncd/community/blob/main/teps/0079-tekton-catalog-support-tiers.md#extract-container-images-from-catalogs). Please note that the security reports do not include user-provided container images if the default value of the image `params` are overwritten by `pipelineRun` or `taskRun` at run time.
+The images used by Tekton tasks, pipelines and stepactions are extracted from the [`task.step.image`](https://github.com/tektoncd/pipeline/blob/main/docs/tasks.md#running-scripts-within-steps) fields of the resource yaml file. If the `image` value is specified by [`params`](https://github.com/tektoncd/pipeline/blob/main/docs/tasks.md#specifying-parameters), the default value of the params (if provided) is used to run the security report. You can find examples with explanations [here](https://github.com/tektoncd/community/blob/main/teps/0079-tekton-catalog-support-tiers.md#extract-container-images-from-catalogs). Please note that the security reports do not include user-provided container images if the default value of the image `params` are overwritten by `pipelineRun` or `taskRun` at run time.
 
 ### CoreDNS plugins, KEDA scalers, Keptn integrations, OPA policies and Tinkerbell actions
 
@@ -28,7 +28,7 @@ Images used by these kinds of packages can be listed using the `containersImages
 
 ## Application dependencies
 
-Trivy also scans [applications dependencies](https://aquasecurity.github.io/trivy/v0.44/docs/scanner/vulnerability/language/) for vulnerabilities. To do that, it inspects the files that contain the applications dependencies and the versions used. Please see the [language-specific packages](https://aquasecurity.github.io/trivy/v0.44/docs/scanner/vulnerability/language/) section in the Trivy documentation (image column) for a full list of the applications dependencies supported.
+Trivy also scans [applications dependencies](https://aquasecurity.github.io/trivy/v0.50/docs/scanner/vulnerability/#language-specific-packages) for vulnerabilities. To do that, it inspects the files that contain the applications dependencies and the versions used. Please see the [language-specific packages](https://aquasecurity.github.io/trivy/v0.50/docs/scanner/vulnerability/#language-specific-packages) section in the Trivy documentation (image column) for a full list of the applications dependencies supported.
 
 If you want your application dependencies scanned, please make sure the relevant files are included in your final images. The security report will include a target for each of them.
 

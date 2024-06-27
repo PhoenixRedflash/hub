@@ -25,6 +25,7 @@ import (
 	"github.com/go-git/go-git/v5/storage/memory"
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
+	"github.com/rs/zerolog/log"
 	"github.com/satori/uuid"
 	"github.com/spf13/viper"
 	"gopkg.in/yaml.v2"
@@ -96,11 +97,14 @@ var (
 		hub.KubeArmor,
 		hub.Kubewarden,
 		hub.Kyverno,
+		hub.Meshery,
 		hub.OLM,
 		hub.OPA,
+		hub.OpenCost,
 		hub.TBAction,
 		hub.TektonPipeline,
 		hub.TektonTask,
+		hub.TektonStepAction,
 	}
 )
 
@@ -296,11 +300,14 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 		hub.KubeArmor,
 		hub.Kubewarden,
 		hub.Kyverno,
+		hub.Meshery,
 		hub.OLM,
 		hub.OPA,
+		hub.OpenCost,
 		hub.TBAction,
 		hub.TektonPipeline,
-		hub.TektonTask:
+		hub.TektonTask,
+		hub.TektonStepAction:
 		tmpDir, packagesPath, err := m.rc.CloneRepository(ctx, r)
 		if err != nil {
 			return err
@@ -476,11 +483,14 @@ func (m *Manager) locateMetadataFile(r *hub.Repository, basePath string) string 
 		hub.KubeArmor,
 		hub.Kubewarden,
 		hub.Kyverno,
+		hub.Meshery,
 		hub.OLM,
 		hub.OPA,
+		hub.OpenCost,
 		hub.TBAction,
 		hub.TektonPipeline,
-		hub.TektonTask:
+		hub.TektonTask,
+		hub.TektonStepAction:
 		mdFile = filepath.Join(basePath, hub.RepositoryMetadataFile)
 	}
 	return mdFile
@@ -557,7 +567,7 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 			}
 		case SchemeIsOCI(u):
 			// Digest is obtained by hashing the list of versions available
-			versions, err := m.tg.Tags(ctx, r, true)
+			versions, err := m.tg.Tags(ctx, r, true, true)
 			if err != nil {
 				return digest, err
 			}
@@ -579,7 +589,7 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 
 	case GitRepoURLRE.MatchString(r.URL):
 		// Do not track repo's digest for Tekton repos using git based versioning
-		if (r.Kind == hub.TektonTask || r.Kind == hub.TektonPipeline) && r.Data != nil {
+		if (r.Kind == hub.TektonTask || r.Kind == hub.TektonPipeline || r.Kind == hub.TektonStepAction) && r.Data != nil {
 			var data *hub.TektonData
 			if err := json.Unmarshal(r.Data, &data); err != nil {
 				return "", fmt.Errorf("invalid tekton repository data: %w", err)
@@ -820,6 +830,7 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 	case hub.Helm:
 		if SchemeIsHTTP(u) {
 			if _, _, err := m.il.LoadIndex(r); err != nil {
+				log.Error().Err(err).Str("url", r.URL).Msg("error loading index")
 				return errors.New("the url provided does not point to a valid Helm repository")
 			}
 		}
@@ -840,11 +851,14 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 		hub.KubeArmor,
 		hub.Kubewarden,
 		hub.Kyverno,
+		hub.Meshery,
 		hub.OLM,
 		hub.OPA,
+		hub.OpenCost,
 		hub.TBAction,
 		hub.TektonPipeline,
-		hub.TektonTask:
+		hub.TektonTask,
+		hub.TektonStepAction:
 		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
 			return errors.New("invalid url format")
 		}

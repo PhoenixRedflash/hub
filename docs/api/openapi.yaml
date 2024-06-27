@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
   title: Artifact Hub
-  description: "Find, install and publish Kubernetes packages"
-  version: 1.17.0
+  description: "Find, install and publish Cloud Native packages"
+  version: 1.19.0
   contact:
     name: Artifact Hub support
     url: https://cloud-native.slack.com/channels/artifact-hub
@@ -987,7 +987,7 @@ paths:
                         stars: 2
                         description: >-
                           Artifact Hub is a web-based application that enables
-                          finding, installing, and publishing Kubernetes
+                          finding, installing, and publishing Cloud Native
                           packages.
                         version: 0.1.0
                         app_version: 0.1.0
@@ -1529,6 +1529,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/meshery/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getMesheryDesignsDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MesheryDesign"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/opa/{repoName}/{packageName}":
     get:
       tags:
@@ -1569,6 +1592,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OLMPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/opencost/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getOpencostPluginDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpencostPlugin"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -1621,6 +1667,30 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/tekton-stepaction/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getTektonStepActionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TektonStepActionPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
   "/packages/tekton-task/{repoName}/{packageName}":
     get:
       tags:
@@ -2076,6 +2146,30 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/meshery/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getMesheryDesignVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MesheryDesign"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/opa/{repoName}/{packageName}/{version}":
     get:
       tags:
@@ -2124,6 +2218,30 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/opencost/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getOpencostPluginVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpencostPlugin"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/tbaction/{repoName}/{packageName}/{version}":
     get:
       tags:
@@ -2166,6 +2284,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TektonPipelinePackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/tekton-stepaction/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getTektonStepActionVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TektonStepActionPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -4251,6 +4393,20 @@ components:
           type: boolean
           nullable: false
           example: true
+    MesheryDesign:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              nullable: false
+              properties:
+                design:
+                  type: string
+                  additionalProperties:
+                    type: string
+                  example: "name: sample"
     OLMPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -4351,6 +4507,8 @@ components:
                     policy1: |
                       - macro: text
                         condition: (evt.num < 0)
+    OpencostPlugin:
+      $ref: "#/components/schemas/Package"
     TBActionPackage:
       $ref: "#/components/schemas/Package"
     TektonPipelinePackage:
@@ -4386,6 +4544,32 @@ components:
                       example:
                         - task1
                         - task2
+                examples:
+                  type: object
+                  nullable: false
+                  additionalProperties: true
+                platforms:
+                  type: array
+                  items:
+                    type: string
+                    nullable: false
+                    example: darwin/amd64
+    TektonStepActionPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                pipelines.minVersion:
+                  type: string
+                  example: 2.0.0
+                manifestRaw:
+                  type: string
+                  additionalProperties:
+                    type: string
+                  example: "apiVersion: tekton.dev/v1beta1"
                 examples:
                   type: object
                   nullable: false
@@ -4832,6 +5016,9 @@ components:
           * `20` - KCL packages
           * `21` - Headlamp plugins
           * `22` - Inspektor gadgets
+          * `23` - Tekton stepactions
+          * `24` - Meshery designs
+          * `25` - Opencost plugins
     RepositoryKindParam:
       type: string
       enum:
@@ -4858,6 +5045,9 @@ components:
         - kcl
         - headlamp
         - inspektor-gadget
+        - tekton-stepaction
+        - meshery
+        - opencost
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4883,6 +5073,9 @@ components:
         * `kcl` - KCL packages
         * `headlamp` - Headlamp plugins
         * `inspektor-gadget` - Inspektor gadgets
+        * `tekton-stepaction` - Tekton stepactions
+        * `meshery` - Meshery designs
+        * `opencost` - Opencost plugins
     RepositorySummary:
       type: object
       required:
@@ -5263,7 +5456,7 @@ components:
       schema:
         type: boolean
       required: false
-      description: Whether to get only pacakges published by CNCF projects
+      description: Whether to get only packages published by CNCF projects
     OfficialParam:
       in: query
       name: official
@@ -5425,6 +5618,9 @@ components:
           * `20` - KCL packages
           * `21` - Headlamp plugins
           * `22` - Inspektor gadgets
+          * `23` - Tekton stepactions
+          * `24` - Meshery designs
+          * `25` - Opencost plugins
     PackageNameParam:
       in: path
       name: packageName

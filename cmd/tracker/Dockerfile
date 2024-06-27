@@ -1,5 +1,5 @@
 # Build tracker
-FROM golang:1.22.0-bullseye AS builder
+FROM golang:1.22.4-bullseye AS builder
 WORKDIR /tmp
 ENV LIBTENSORFLOW_TGZ libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz
 RUN wget -q --no-check-certificate https://storage.googleapis.com/tensorflow/libtensorflow/$LIBTENSORFLOW_TGZ
@@ -17,7 +17,7 @@ FROM golang:1.22-bullseye AS opm-installer
 WORKDIR /tmp
 RUN git clone https://github.com/operator-framework/operator-registry
 WORKDIR /tmp/operator-registry/cmd/opm
-RUN git checkout v1.27.0
+RUN git checkout v1.39.0
 RUN go install
 
 # Final stage

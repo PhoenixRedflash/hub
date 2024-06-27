@@ -9,7 +9,7 @@ exports[`Home index creates snapshot 1`] = `
       class="jumbotron mb-0 text-center border-0 jumbotron"
     >
       <div
-        aria-label="Find, install and publisher Kubernetes packages"
+        aria-label="Find, install and publisher Cloud Native packages"
         class="display-4 text-center d-block d-xxl-flex justify-content-center noFocus mainTitle"
         id="content"
         role="banner"
@@ -20,7 +20,7 @@ exports[`Home index creates snapshot 1`] = `
         <span
           class="secondLine"
         >
-          Kubernetes packages
+          Cloud Native packages
         </span>
       </div>
       <div
@@ -310,7 +310,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-3 px-xs-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo templates, KubeArmor policies, KCL modules, Headlamp plugins and Inspektor gadgets.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages and configurations. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks, pipelines and stepactions, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo templates, KubeArmor policies, KCL modules, Headlamp plugins, Inspektor gadgets, Meshery designs and OpenCost plugins.
           <div
             class="py-0 py-lg-5"
           >
@@ -748,6 +748,32 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </a>
               <a
+                aria-label="Open Meshery site"
+                class="link col iconLink"
+                href="https://meshery.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/meshery-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      Meshery designs
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
                 aria-label="Open Operator framework site"
                 class="link col iconLink"
                 href="https://github.com/operator-framework"
@@ -799,6 +825,36 @@ exports[`Home index creates snapshot 1`] = `
                   </div>
                 </div>
               </a>
+            </div>
+            <div
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+            >
+              <a
+                aria-label="Open Policy Agent site"
+                class="link col iconLink"
+                href="https://www.opencost.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/opencost-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      OpenCost plugins
+                    </small>
+                  </div>
+                </div>
+              </a>
               <a
                 aria-label="Open Tekton site"
                 class="link col iconLink"
@@ -820,7 +876,7 @@ exports[`Home index creates snapshot 1`] = `
                     class="d-none d-sm-block text-light mt-2 legendIcon"
                   >
                     <small>
-                      Tekton tasks and pipelines
+                      Tekton packages
                     </small>
                   </div>
                 </div>
@@ -864,21 +920,26 @@ exports[`Home index creates snapshot 1`] = `
         class="container-lg px-sm-4 px-lg-0 py-0 py-md-5"
       >
         <div
-          class="text-center px-4 px-xs-0"
+          class="d-flex flex-column justify-content-center px-4 px-xs-0"
         >
           <img
-            alt="Logo CNCF sandbox project"
-            class="logo homeLogo"
-            src="/static/media/cncf-sandbox-horizontal-color.png"
+            alt="Logo CNCF incubating project"
+            class="logo colorLogo homeLogo"
+            src="/static/media/cncf-incubating-color.svg"
+          />
+          <img
+            alt="Logo CNCF incubating project"
+            class="logo whiteLogo homeLogo"
+            src="/static/media/cncf-incubating-white.svg"
           />
           <div
-            class="px-3 pt-4"
+            class="px-3 pt-4 text-center w-100"
           >
             Artifact Hub is a 
             <a
-              aria-label="Open CNCF sandbox projects site"
+              aria-label="Open CNCF projects site"
               class="link fw-semibold text-dark"
-              href="https://www.cncf.io/sandbox-projects/"
+              href="https://www.cncf.io/projects/"
               rel="noopener noreferrer"
               role="button"
               tabindex="-1"
@@ -886,7 +947,7 @@ exports[`Home index creates snapshot 1`] = `
             >
               Cloud Native Computing Foundation
             </a>
-             sandbox project.
+             incubating project.
           </div>
         </div>
       </div>

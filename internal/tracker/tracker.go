@@ -200,10 +200,13 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 		hub.KubeArmor,
 		hub.Kubewarden,
 		hub.Kyverno,
+		hub.Meshery,
 		hub.OPA,
+		hub.OpenCost,
 		hub.TBAction,
 		hub.TektonPipeline,
-		hub.TektonTask:
+		hub.TektonTask,
+		hub.TektonStepAction:
 		tmpDir, packagesPath, err = t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
 	}
 

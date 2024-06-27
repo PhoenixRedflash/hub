@@ -1162,7 +1162,7 @@
                 },
                 "repositoriesKinds": {
                     "title": "Repositories kinds to process ([] = all)",
-                    "description": "The following kinds are supported at the moment: falco, helm, olm, opa, tbaction, krew, helm-plugin, tekton-task, keda-scaler, coredns, keptn, tekton-pipeline, container, kubewarden, gatekeeper, kyverno, knative-client-plugin, backstage, argo-template, kubearmor, kcl, headlamp, inspektor-gadget",
+                    "description": "The following kinds are supported at the moment: falco, helm, olm, opa, tbaction, krew, helm-plugin, tekton-task, keda-scaler, coredns, keptn, tekton-pipeline, container, kubewarden, gatekeeper, kyverno, knative-client-plugin, backstage, argo-template, kubearmor, kcl, headlamp, inspektor-gadget, tekton-stepaction, meshery, opencost",
                     "type": "array",
                     "items": {
                         "type": "string"
@@ -1230,7 +1230,7 @@
                         "image": {
                             "title": "Trivy container image",
                             "type": "string",
-                            "default": "aquasec/trivy:0.44.1"
+                            "default": "aquasec/trivy:0.50.1"
                         },
                         "nodeSelector": {
                             "title": "Trivy pod node selector",

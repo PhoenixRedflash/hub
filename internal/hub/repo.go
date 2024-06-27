@@ -115,6 +115,15 @@ const (
 
 	// InspektorGadget represents a repository with Inspektor Gadgets.
 	InspektorGadget RepositoryKind = 22
+
+	// TektonStepAction represents a repository with Tekton stepactions.
+	TektonStepAction RepositoryKind = 23
+
+	// Meshery represents a repository with Meshery designs.
+	Meshery RepositoryKind = 24
+
+	// OpenCost represents a repository with OpenCost plugins.
+	OpenCost RepositoryKind = 25
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -156,16 +165,22 @@ func GetKindName(kind RepositoryKind) string {
 		return "kubewarden"
 	case Kyverno:
 		return "kyverno"
+	case Meshery:
+		return "meshery"
 	case OLM:
 		return "olm"
 	case OPA:
 		return "opa"
+	case OpenCost:
+		return "opencost"
 	case TBAction:
 		return "tbaction"
 	case TektonPipeline:
 		return "tekton-pipeline"
 	case TektonTask:
 		return "tekton-task"
+	case TektonStepAction:
+		return "tekton-stepaction"
 	default:
 		return ""
 	}
@@ -211,16 +226,22 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return Kubewarden, nil
 	case "kyverno":
 		return Kyverno, nil
+	case "meshery":
+		return Meshery, nil
 	case "olm":
 		return OLM, nil
 	case "opa":
 		return OPA, nil
+	case "opencost":
+		return OpenCost, nil
 	case "tbaction":
 		return TBAction, nil
 	case "tekton-pipeline":
 		return TektonPipeline, nil
 	case "tekton-task":
 		return TektonTask, nil
+	case "tekton-stepaction":
+		return TektonStepAction, nil
 	default:
 		return -1, errors.New("invalid kind name")
 	}

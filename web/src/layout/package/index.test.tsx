@@ -7,25 +7,31 @@ import API from '../../api';
 import { ErrorKind, Package, SearchResults } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import PackageView from './index';
+
 jest.mock('../../api');
 jest.mock('../../utils/updateMetaIndex');
 jest.mock('react-apexcharts', () => () => <div>Chart</div>);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 jest.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
 jest.mock('remark-gfm', () => () => <div />);
+jest.mock('rehype-github-alerts', () => () => <div />);
 jest.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
 
 const getMockPackage = (fixtureId: string): Package => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/index/${fixtureId}.json`) as Package;
 };
 
 const getMockRelatedPackages = (fixtureId: string): SearchResults => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/index/${fixtureId}Related.json`) as SearchResults;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mockOutletContextData: any = {
   setIsLoading: jest.fn(),
 };
@@ -38,6 +44,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('Package index', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let dateNowSpy: any;
 
   beforeEach(() => {

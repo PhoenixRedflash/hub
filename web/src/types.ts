@@ -24,6 +24,9 @@ export enum RepositoryKind {
   KCL,
   Headlamp,
   InspektorGadget,
+  TektonStepAction,
+  MesheryDesign,
+  OpenCost,
 }
 
 export enum PackageCategory {
@@ -153,6 +156,7 @@ export interface Package {
   provider?: string | null;
   containersImages?: ContainerImage[] | null;
   capabilities?: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   crds?: { [key: string]: any } | null;
   crdsExamples?: CustomResourcesDefinitionExample[] | null;
   securityReportSummary?: SecurityReportSummary | null;
@@ -210,6 +214,7 @@ export interface OLMExtraData {
 
 export interface CustomResourcesDefinitionExample {
   kind: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
@@ -248,6 +253,7 @@ export interface PackageData {
   customResourcesDefinitionsExamples?: string;
   customResourcesDefinitions?: CustomResourcesDefinition[];
   isGlobalOperator?: boolean;
+  design?: string;
   manifestRaw?: string;
   template?: string;
   pipelinesMinVersion?: string;
@@ -601,6 +607,7 @@ export interface RegoPlaygroundPolicy {
     [key: string]: string | string[];
   };
   data: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
   };
 }
@@ -621,6 +628,7 @@ export interface AuthorizationPolicy {
   label: string;
   policy: string;
   data: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
   };
 }
@@ -645,6 +653,7 @@ export interface SecurityReportResult {
 }
 
 export interface Vulnerability {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
   Severity: VulnerabilitySeverity;
 }
@@ -734,6 +743,7 @@ export interface ChartTemplatesData {
     name: string;
     data: string;
   }[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   values: any;
 }
 
@@ -779,8 +789,8 @@ export interface AHStats {
   generatedAt?: number;
   packages: {
     total: number;
-    runningTotal?: any[];
-    createdMonthly?: any[];
+    runningTotal?: number[][];
+    createdMonthly?: number[][];
     viewsDaily?: number[][];
     viewsMonthly?: number[][];
     topViewsToday?: TopViewsItem[];
@@ -788,21 +798,21 @@ export interface AHStats {
   };
   repositories: {
     total: number;
-    runningTotal?: any[];
-    createdMonthly?: any[];
+    runningTotal?: number[][];
+    createdMonthly?: number[][];
   };
   snapshots: {
     total: number;
-    createdMonthly?: any[];
-    runningTotal?: any[];
+    createdMonthly?: number[][];
+    runningTotal?: number[][];
   };
   organizations: {
     total: number;
-    runningTotal?: any[];
+    runningTotal?: number[][];
   };
   users: {
     total: number;
-    runningTotal?: any[];
+    runningTotal?: number[][];
   };
 }
 

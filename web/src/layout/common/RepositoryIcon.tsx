@@ -101,6 +101,18 @@ const ICONS = {
     default: '/static/media/inspektor-gadget.svg',
     white: '/static/media/inspektor-gadget-light.svg',
   },
+  [RepositoryKind.TektonStepAction]: {
+    default: '/static/media/tekton-pkg.svg',
+    white: '/static/media/tekton-pkg-light.svg',
+  },
+  [RepositoryKind.MesheryDesign]: {
+    default: '/static/media/meshery.svg',
+    white: '/static/media/meshery-light.svg',
+  },
+  [RepositoryKind.OpenCost]: {
+    default: '/static/media/opencost.svg',
+    white: '/static/media/opencost-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

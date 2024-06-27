@@ -1,5 +1,7 @@
 import classnames from 'classnames';
-import { isEmpty, isNull, isUndefined } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
@@ -9,7 +11,11 @@ import API from '../../../api';
 import { FixableVulnerabilitiesInReport, RepositoryKind, SecurityReport, SecurityReportSummary } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import isFuture from '../../../utils/isFuture';
-import { filterFixableVulnerabilities, prepareFixableSummary } from '../../../utils/vulnerabilities';
+import {
+  filterFixableVulnerabilities,
+  prepareFixableSummary,
+  prepareUniqueVulnerabilitiesSummary,
+} from '../../../utils/vulnerabilities';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
 import OldVulnerabilitiesWarning from './OldVulnerabilitiesWarning';
@@ -49,6 +55,8 @@ const SecurityModal = (props: Props) => {
   const [hasOnlyOneTarget, setHasOnlyOneTarget] = useState<boolean>(false);
   const [contentHeight, setContentHeight] = useState<number | undefined>(undefined);
   const [fixableReportSummary, setFixableReportSummary] = useState<FixableVulnerabilitiesInReport | undefined>();
+  const [uniqueSummary, setUniqueSummary] = useState<SecurityReportSummary | null>(null);
+  const [totalUniqueVulnerabilities, setTotalUniqueVulnerabilities] = useState<number>(0);
   const [showOnlyFixableVulnerabilities, setShowOnlyFixableVulnerabilities] = useState<boolean>(false);
   const allVulnerabilitiesAreFixable =
     !isUndefined(fixableReportSummary) && fixableReportSummary.total === props.totalVulnerabilities;
@@ -79,6 +87,11 @@ const SecurityModal = (props: Props) => {
       const fixableVulnerabilities = filterFixableVulnerabilities(currentReport);
       setFixableReport(fixableVulnerabilities);
       setFixableReportSummary(prepareFixableSummary(fixableVulnerabilities));
+      const uniqueVulnerabilities = prepareUniqueVulnerabilitiesSummary(currentReport);
+      if (!isNull(uniqueVulnerabilities)) {
+        setUniqueSummary(uniqueVulnerabilities.summary);
+        setTotalUniqueVulnerabilities(uniqueVulnerabilities.total);
+      }
       activateTargetWhenIsOnlyOne(currentReport);
       setIsLoading(false);
       setOpenStatus(true);
@@ -140,7 +153,7 @@ const SecurityModal = (props: Props) => {
     if (openStatus) {
       updateUrl();
     }
-  }, [visibleTarget, visibleImage, visibleSection]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [visibleTarget, visibleImage, visibleSection]);
 
   useEffect(() => {
     if (openStatus && report && contentWrapper && contentWrapper.current && isUndefined(contentHeight)) {
@@ -153,13 +166,13 @@ const SecurityModal = (props: Props) => {
     if ((openStatus || props.visibleSecurityReport) && !isUndefined(currentPkgId)) {
       onCloseModal();
     }
-  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.packageId]);
 
   useEffect(() => {
     if (props.visibleSecurityReport && !openStatus && isUndefined(currentPkgId)) {
       onOpenModal();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   return (
     <>
@@ -228,6 +241,8 @@ const SecurityModal = (props: Props) => {
                 fixableSummary={fixableReportSummary.summary}
                 totalFixableVulnerabilities={fixableReportSummary.total}
                 allVulnerabilitiesAreFixable={allVulnerabilitiesAreFixable}
+                uniqueSummary={uniqueSummary}
+                totalUniqueVulnerabilities={totalUniqueVulnerabilities}
               />
             )}
 

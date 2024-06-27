@@ -24,10 +24,13 @@ cat docs/www/headers/krew_kubectl_plugins_repositories docs/krew_kubectl_plugins
 cat docs/www/headers/kubearmor_policies_repositories docs/kubearmor_policies_repositories.md > docs/www/content/topics/repositories/kubearmor-policies.md
 cat docs/www/headers/kubewarden_policies_repositories docs/kubewarden_policies_repositories.md > docs/www/content/topics/repositories/kubewarden-policies.md
 cat docs/www/headers/kyverno_policies_repositories docs/kyverno_policies_repositories.md > docs/www/content/topics/repositories/kyverno-policies.md
+cat docs/www/headers/meshery_designs_repositories docs/meshery_designs_repositories.md > docs/www/content/topics/repositories/meshery-designs.md
 cat docs/www/headers/olm_operators_repositories docs/olm_operators_repositories.md > docs/www/content/topics/repositories/olm-operators.md
 cat docs/www/headers/opa_policies_repositories docs/opa_policies_repositories.md > docs/www/content/topics/repositories/opa-policies.md
+cat docs/www/headers/opencost_plugins_repositories docs/opencost_plugins_repositories.md > docs/www/content/topics/repositories/opencost-plugins.md
 cat docs/www/headers/tekton_pipelines_repositories docs/tekton_pipelines_repositories.md > docs/www/content/topics/repositories/tekton-pipelines.md
 cat docs/www/headers/tekton_tasks_repositories docs/tekton_tasks_repositories.md > docs/www/content/topics/repositories/tekton-tasks.md
+cat docs/www/headers/tekton_stepactions_repositories docs/tekton_stepactions_repositories.md > docs/www/content/topics/repositories/tekton-stepactions.md
 cat docs/www/headers/tinkerbell_actions_repositories docs/tinkerbell_actions_repositories.md > docs/www/content/topics/repositories/tinkerbell-actions.md
 cat docs/www/headers/security_report docs/security_report.md > docs/www/content/topics/security_report.md
 cat docs/www/headers/cli docs/cli.md > docs/www/content/topics/cli.md

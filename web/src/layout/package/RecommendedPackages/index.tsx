@@ -1,4 +1,5 @@
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { memo, useEffect, useState } from 'react';
 import { FiPackage } from 'react-icons/fi';
 
@@ -13,10 +14,10 @@ interface Props {
 }
 
 export const URL_regex =
-  /^https:\/\/([^\/?]+)\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|inspektor-gadget|container)\/([a-z0-9-]+)\/([a-z0-9-]+)$/; // eslint-disable-line
+  /^https:\/\/([^\/?]+)\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|inspektor-gadget|tekton-stepaction|meshery|opencost|container)\/([a-z0-9-]+)\/([a-z0-9-]+)$/; // eslint-disable-line
 
 const prepareRecommendations = (recommendations?: Recommendation[]): RecommendedPackage[] => {
-  let list: RecommendedPackage[] = [];
+  const list: RecommendedPackage[] = [];
 
   if (!isUndefined(recommendations)) {
     recommendations.forEach((recommendation: Recommendation) => {

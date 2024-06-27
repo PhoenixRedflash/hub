@@ -1,8 +1,10 @@
 import classnames from 'classnames';
-import { compact, isEmpty, uniq } from 'lodash';
+import compact from 'lodash/compact';
 import every from 'lodash/every';
+import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
+import uniq from 'lodash/uniq';
 import { nanoid } from 'nanoid';
 import { ChangeEvent, KeyboardEvent, useContext, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
@@ -124,6 +126,7 @@ const RepositoryModal = (props: Props) => {
       }
       setIsSending(false);
       onCloseModal();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -191,7 +194,11 @@ const RepositoryModal = (props: Props) => {
           };
         }
 
-        if ([RepositoryKind.TektonTask, RepositoryKind.TektonPipeline].includes(selectedKind)) {
+        if (
+          [RepositoryKind.TektonTask, RepositoryKind.TektonPipeline, RepositoryKind.TektonStepAction].includes(
+            selectedKind
+          )
+        ) {
           repository.data = {
             versioning: versioning,
           };
@@ -497,6 +504,39 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.TektonStepAction:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/tekton-stepactions"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Tekton stepactions
+          </ExternalLink>
+        );
+        break;
+      case RepositoryKind.MesheryDesign:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/meshery-designs"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Meshery designs
+          </ExternalLink>
+        );
+        break;
+      case RepositoryKind.OpenCost:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/opencost-plugins"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            OpenCost plugins
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -527,6 +567,9 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.KCL:
               case RepositoryKind.Headlamp:
               case RepositoryKind.InspektorGadget:
+              case RepositoryKind.TektonStepAction:
+              case RepositoryKind.MesheryDesign:
+              case RepositoryKind.OpenCost:
                 return (
                   <>
                     <p
@@ -602,11 +645,11 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.Helm:
         return undefined;
       case RepositoryKind.OLM:
-        return `(^(https://([A-Za-z0-9_.-]+)/|${OCI_PREFIX})[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$`;
+        return `^((https?://)|${OCI_PREFIX}).*`;
       case RepositoryKind.Container:
-        return `^(${OCI_PREFIX})[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$`;
+        return `^${OCI_PREFIX}.*`;
       default:
-        return '^(https://([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$';
+        return `^https?://.*`;
     }
   };
 
@@ -837,7 +880,7 @@ const RepositoryModal = (props: Props) => {
                 resourceKind: ResourceKind.repositoryName,
                 excluded: !isUndefined(props.repository) ? [props.repository.name] : [],
               }}
-              pattern="[a-z][a-z0-9-]*"
+              pattern="[a-z][a-z0-9\-]*"
               autoComplete="off"
               disabled={!isUndefined(props.repository)}
               additionalInfo={
@@ -921,6 +964,9 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.KCL,
               RepositoryKind.Headlamp,
               RepositoryKind.InspektorGadget,
+              RepositoryKind.TektonStepAction,
+              RepositoryKind.MesheryDesign,
+              RepositoryKind.OpenCost,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -941,11 +987,14 @@ const RepositoryModal = (props: Props) => {
               </div>
             )}
 
-            {[RepositoryKind.TektonTask, RepositoryKind.TektonPipeline].includes(selectedKind) && (
+            {[RepositoryKind.TektonTask, RepositoryKind.TektonPipeline, RepositoryKind.TektonStepAction].includes(
+              selectedKind
+            ) && (
               <>
                 <label className={`form-label fw-bold ${styles.label}`}>Versioning</label>
 
                 <div className="d-flex flex-row mb-2">
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   {Object.entries(VersioningOption).map((opt: any) => {
                     return (
                       <div className="form-check me-4 mb-2" key={`versioning_${opt[1]}`}>
@@ -1068,6 +1117,9 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.KCL,
               RepositoryKind.Headlamp,
               RepositoryKind.InspektorGadget,
+              RepositoryKind.TektonStepAction,
+              RepositoryKind.MesheryDesign,
+              RepositoryKind.OpenCost,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

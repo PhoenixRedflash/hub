@@ -172,6 +172,27 @@ describe('Image', () => {
     expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_inspektor-gadget.png');
   });
 
+  it('renders Tekton stepaction icon', () => {
+    render(<Image {...defaultProps} kind={RepositoryKind.TektonStepAction} />);
+    const image = screen.getByAltText('alt image');
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_tekton-task.png');
+  });
+
+  it('renders Meshery Design icon', () => {
+    render(<Image {...defaultProps} kind={RepositoryKind.MesheryDesign} />);
+    const image = screen.getByAltText('alt image');
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_meshery.png');
+  });
+
+  it('renders OpenCost plugin icon', () => {
+    render(<Image {...defaultProps} kind={RepositoryKind.OpenCost} />);
+    const image = screen.getByAltText('alt image');
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_opencost.png');
+  });
+
   it('renders placeholder icon', () => {
     render(<Image {...defaultProps} placeholderIcon={<>icon</>} />);
     expect(screen.getByText('icon')).toBeInTheDocument();

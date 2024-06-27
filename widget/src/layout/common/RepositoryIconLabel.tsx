@@ -108,6 +108,18 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.InspektorGadget,
     name: 'Inspektor Gadget',
   },
+  {
+    kind: RepositoryKind.TektonStepAction,
+    name: 'Tekton stepaction',
+  },
+  {
+    kind: RepositoryKind.MesheryDesign,
+    name: 'Meshery design',
+  },
+  {
+    kind: RepositoryKind.OpenCost,
+    name: 'OpenCost plugin',
+  },
 ];
 
 const Wrapper = styled('span')`
@@ -149,12 +161,7 @@ const RepositoryIconLabel = (props: Props) => {
   return (
     <Wrapper>
       <div>
-        <Icon
-          kind={props.kind}
-          baseUrl={props.baseUrl}
-          theme={props.theme}
-          className={props.theme === 'dark' ? 'grayedOut' : ''}
-        />
+        <Icon kind={props.kind} baseUrl={props.baseUrl} className={props.theme === 'dark' ? 'grayedOut' : ''} />
       </div>
       <RepoName>{repo.name}</RepoName>
     </Wrapper>

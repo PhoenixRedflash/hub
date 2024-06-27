@@ -1,5 +1,5 @@
-import { throttle } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
+import throttle from 'lodash/throttle';
 import moment from 'moment';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
@@ -21,6 +21,7 @@ import CNCF from './badges/CNCF';
 import Deprecated from './badges/Deprecated';
 import Official from './badges/Official';
 import Signed from './badges/Signed';
+import ValuesSchemaBadge from './badges/ValuesSchema';
 import VerifiedPublisher from './badges/VerifiedPublisher';
 import styles from './PackageCard.module.css';
 import PackageCategoryLabel from './PackageCategoryLabel';
@@ -101,11 +102,11 @@ const PackageCard = (props: Props) => {
 
   useLayoutEffect(() => {
     saveInfoWidth();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     checkPkgInfo();
-  }, [fullInfoWidth]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [fullInfoWidth]);
 
   useEffect(() => {
     window.addEventListener('resize', throttle(saveInfoWidth, 200));
@@ -114,7 +115,7 @@ const PackageCard = (props: Props) => {
     }
 
     return () => window.removeEventListener('resize', saveInfoWidth);
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   return (
     <div className={`py-sm-3 py-2 ${styles.cardWrapper} ${props.cardWrapperClassName}`} role="listitem">
@@ -273,6 +274,12 @@ const PackageCard = (props: Props) => {
                 <div className="d-flex flex-row ms-auto">
                   {props.package.deprecated && <Deprecated className="d-inline mt-3 ms-2" />}
                   {(props.package.cncf || props.package.repository.cncf) && <CNCF className="d-inline mt-3 ms-2" />}
+                  {props.package.repository.kind === RepositoryKind.Helm && (
+                    <ValuesSchemaBadge
+                      hasValuesSchema={props.package.hasValuesSchema || false}
+                      className="d-inline mt-3 ms-2"
+                    />
+                  )}
                   <Signed
                     signed={props.package.signed}
                     signatures={props.package.signatures}

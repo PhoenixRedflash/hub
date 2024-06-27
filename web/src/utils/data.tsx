@@ -250,6 +250,15 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     active: true,
   },
   {
+    kind: RepositoryKind.MesheryDesign,
+    label: 'meshery',
+    name: 'Meshery designs',
+    singular: 'Meshery design',
+    plural: 'Meshery designs',
+    icon: <RepositoryIcon kind={RepositoryKind.MesheryDesign} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
     kind: RepositoryKind.OLM,
     label: 'olm',
     name: 'OLM operators',
@@ -268,12 +277,30 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     active: true,
   },
   {
+    kind: RepositoryKind.OpenCost,
+    label: 'opencost',
+    name: 'OpenCost plugins',
+    singular: 'OpenCost plugin',
+    plural: 'OpenCost plugins',
+    icon: <RepositoryIcon kind={RepositoryKind.OpenCost} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
     kind: RepositoryKind.TektonPipeline,
     label: 'tekton-pipeline',
     name: 'Tekton pipelines',
     singular: 'Tekton pipeline',
     plural: 'Tekton pipelines',
     icon: <RepositoryIcon kind={RepositoryKind.TektonPipeline} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
+    kind: RepositoryKind.TektonStepAction,
+    label: 'tekton-stepaction',
+    name: 'Tekton stepactions',
+    singular: 'Tekton stepaction',
+    plural: 'Tekton stepactions',
+    icon: <RepositoryIcon kind={RepositoryKind.TektonStepAction} className="mw-100 mh-100" />,
     active: true,
   },
   {
@@ -795,7 +822,7 @@ export const CVSS_V3_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
 export const OCI_PREFIX = 'oci://';
 
 export const PKG_DETAIL_PATH =
-  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|kcl|headlamp|inspektor-gadget|container)\//;
+  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|kcl|headlamp|inspektor-gadget|tekton-stepaction|meshery|opencost|container)\//;
 
 export const HOME_ROUTES = [
   '/verify-email',

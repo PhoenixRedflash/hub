@@ -1,6 +1,6 @@
 import classnames from 'classnames';
-import { isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { useRef, useState } from 'react';
 
 import { RepositoryKind } from '../../types';
@@ -45,6 +45,7 @@ const Image = (props: Props) => {
           return '/static/media/placeholder_pkg_krew.png';
         case RepositoryKind.TektonTask:
         case RepositoryKind.TektonPipeline:
+        case RepositoryKind.TektonStepAction:
           return '/static/media/placeholder_pkg_tekton-task.png';
         case RepositoryKind.KedaScaler:
           return '/static/media/placeholder_pkg_keda-scaler.png';
@@ -74,6 +75,10 @@ const Image = (props: Props) => {
           return '/static/media/placeholder_pkg_headlamp.png';
         case RepositoryKind.InspektorGadget:
           return '/static/media/placeholder_pkg_inspektor-gadget.png';
+        case RepositoryKind.MesheryDesign:
+          return '/static/media/placeholder_pkg_meshery.png';
+        case RepositoryKind.OpenCost:
+          return '/static/media/placeholder_pkg_opencost.png';
         default:
           return PLACEHOLDER_SRC;
       }

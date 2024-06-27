@@ -1,13 +1,24 @@
-import { filter, isEmpty, isNull, isUndefined } from 'lodash';
+import filter from 'lodash/filter';
+import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
-import { FixableVulnerabilitiesInReport, SecurityReport, SecurityReportResult, Vulnerability } from '../types';
+import {
+  FixableVulnerabilitiesInReport,
+  SecurityReport,
+  SecurityReportResult,
+  SecurityReportSummary,
+  Vulnerability,
+  VulnerabilitySeverity,
+} from '../types';
 import formatSecurityReport from './formatSecurityReport';
 import sumObjectValues from './sumObjectValues';
 
 const prepareFixableSummary = (
   fixableVulnerabilities: SecurityReport | null | undefined
 ): FixableVulnerabilitiesInReport => {
-  let fixReport: FixableVulnerabilitiesInReport = { report: {}, summary: {}, total: 0 };
+  const fixReport: FixableVulnerabilitiesInReport = { report: {}, summary: {}, total: 0 };
   if (fixableVulnerabilities) {
     let allVulnerabilities: Vulnerability[] = [];
     Object.keys(fixableVulnerabilities).forEach((image: string) => {
@@ -31,10 +42,50 @@ const prepareFixableSummary = (
   return fixReport;
 };
 
+const prepareUniqueVulnerabilitiesSummary = (
+  currentReport: SecurityReport | null
+): { summary: SecurityReportSummary; total: number } | null => {
+  if (isNull(currentReport)) return null;
+
+  const fullReportSumary: SecurityReportSummary = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const summary: any = {};
+  const uniqueSummaryReport: SecurityReportSummary = {};
+  const allVulnerabilities: string[] = [];
+
+  Object.keys(currentReport).forEach((img: string) => {
+    currentReport[img].Results.forEach((target: SecurityReportResult) => {
+      if (target.Vulnerabilities) {
+        target.Vulnerabilities.forEach((vulnerability: Vulnerability) => {
+          const severity = vulnerability.Severity.toLowerCase() as VulnerabilitySeverity;
+          allVulnerabilities.push(vulnerability.VulnerabilityID);
+          if (isUndefined(summary[severity])) {
+            summary[severity] = [vulnerability.VulnerabilityID];
+            fullReportSumary[severity] = 1;
+          } else {
+            summary[severity].push(vulnerability.VulnerabilityID);
+            fullReportSumary[severity]! += 1;
+          }
+        });
+      }
+    });
+  });
+
+  Object.keys(summary).forEach((severity: string) => {
+    uniqueSummaryReport[severity as VulnerabilitySeverity] = new Set(summary[severity]).size;
+  });
+
+  if (isEqual(fullReportSumary, uniqueSummaryReport)) {
+    return null;
+  } else {
+    return { summary: uniqueSummaryReport, total: new Set(allVulnerabilities).size };
+  }
+};
+
 const filterFixableVulnerabilities = (currentReport: SecurityReport | null): SecurityReport | null => {
   if (isNull(currentReport)) return null;
 
-  let tmpReport: SecurityReport = {};
+  const tmpReport: SecurityReport = {};
   Object.keys(currentReport).forEach((img: string) => {
     currentReport[img].Results.forEach((target: SecurityReportResult) => {
       let vulnerabilities: null | Vulnerability[] = [];
@@ -55,4 +106,4 @@ const filterFixableVulnerabilities = (currentReport: SecurityReport | null): Sec
   return tmpReport;
 };
 
-export { filterFixableVulnerabilities, prepareFixableSummary };
+export { filterFixableVulnerabilities, prepareFixableSummary, prepareUniqueVulnerabilitiesSummary };
